@@ -1,0 +1,55 @@
+@host = {{$dotenv %host}}
+@token = {{$dotenv %token}}
+
+
+### Obtener todos los pedidos
+GET /api/pedidos HTTP/1.1
+Host: {{host}}
+Authorization: Bearer {{token}}
+
+
+### Obtener todos los pedidos
+GET /api/pedidos?clienteId=57 HTTP/1.1
+Host: {{host}}
+Authorization: Bearer {{token}}
+
+### Obtener pedido por ID
+GET /api/pedidos/1 HTTP/1.1
+Host: {{host}}
+Authorization: Bearer {{token}}
+
+### Crear pedido
+POST /api/pedidos HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "id": null,
+    "clienteId": 3,
+    "tecnicoId": null,
+    "estado": "sin_candidatos",
+    "areaId": 3,
+    "requerimiento": "Revisión de instalación de gas",
+    "calificacion": null,
+    "comentario": null,
+    "respuesta": null
+}
+
+### Actualizar pedido
+PUT /api/pedidos/1 HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "clienteId": 1,
+  "areaId": 1,
+  "requerimiento": "Actualizar requerimiento",
+  "estado": "finalizado"
+}
+
+### Eliminar pedido
+DELETE /api/pedidos/7 HTTP/1.1
+Host: {{host}}
+Authorization: Bearer {{token}}

@@ -1,0 +1,46 @@
+@host = {{$dotenv %host}}
+@token = {{$dotenv %token}}
+
+
+### Obtener todas las facturas
+GET /api/facturas HTTP/1.1
+Host: {{host}}
+Authorization: Bearer {{token}}
+
+### Obtener factura por ID
+GET /api/facturas/1 HTTP/1.1
+Host: {{host}}
+Authorization: Bearer {{token}}
+
+### Crear factura
+POST /api/facturas HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": null,
+  "usuarioId": 1,
+  "tecnicoId": 1,
+  "descripcion": "Pago de servicio",
+  "total": 5000.00,
+  "metodoPago": "tarjeta"
+}
+
+### Actualizar factura
+PUT /api/facturas/6 HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "usuarioId": 8,
+  "descripcion": "Pago actualizado",
+  "total": 6000.00,
+  "metodoPago": "transferencia"
+}
+
+### Eliminar factura
+DELETE /api/facturas/1 HTTP/1.1
+Host: {{host}}
+Authorization: Bearer {{token}}

@@ -1,0 +1,48 @@
+@host = {{$dotenv %host}}
+@token = {{$dotenv %token}}
+#@token = {{$dotenv %tokenAdmin}}
+
+
+### Obtener todos los clientes
+GET /api/clientes HTTP/1.1
+Host: {{host}}
+Authorization: Bearer {{token}}
+
+### Obtener cliente por ID
+GET /api/clientes/1 HTTP/1.1
+Host: {{host}}
+Authorization: Bearer {{token}}
+
+### Crear cliente (requiere admin)
+POST /api/clientes HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": null,
+  "usuarioId": 1,
+  "nombre": "Pedro",
+  "apellido": "García",
+  "telefono": "1122334455",
+  "direccion": "Calle Nueva 123",
+  "fechaRegistro": "2023-10-01"
+}
+
+### Actualizar cliente
+PUT /api/clientes/1 HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nombre": "Juan actualizado",
+  "apellido": "Pérez",
+  "telefono": "1199887766",
+  "direccion": "Av. Siempre Viva 123"
+}
+
+### Eliminar cliente (requiere admin)
+DELETE /api/clientes/9 HTTP/1.1
+Host: {{host}}
+Authorization: Bearer {{token}}
