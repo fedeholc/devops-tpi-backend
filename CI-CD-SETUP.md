@@ -12,7 +12,7 @@ Para que el workflow funcione correctamente, necesitas configurar los siguientes
 
 | Secret Name          | Descripción                        | Ejemplo                              |
 | -------------------- | ---------------------------------- | ------------------------------------ |
-| `DOCKERHUB_USERNAME` | Tu nombre de usuario de Docker Hub | `fedeusername`                       |
+| `DOCKERHUB_USERNAME` | Tu nombre de usuario de Docker Hub | `fedeholc`                           |
 | `DOCKERHUB_TOKEN`    | Token de acceso de Docker Hub      | `dckr_pat_...`                       |
 | `EC2_HOST`           | IP pública o dominio de tu EC2     | `3.85.123.456`                       |
 | `EC2_USERNAME`       | Usuario SSH para conectar a EC2    | `ubuntu`                             |
