@@ -46,15 +46,13 @@ app.use(express.static(path.join(path.resolve(), "public")));
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_ORIGIN || [
-      "http://localhost:5173",
-      "http://localhost:3000",
-      "http://localhost:8080",
-      "http://localhost:80",
-      "http://localhost",
-      "http://18.220.163.22",
-    ],
+    origin: function (origin, callback) {
+      // Permitir cualquier origen (incluyendo requests sin origin como desde Postman)
+      callback(null, true);
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
