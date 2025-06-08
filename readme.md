@@ -156,3 +156,16 @@ Una vez que la interfaz del frontend alcance un estado más estable y las funcio
 - Detectar regresiones en la UI o en la interacción con la API que podrían pasar desapercibidas en pruebas más aisladas.
 
 El objetivo es garantizar una experiencia de usuario fluida y sin errores antes de cualquier despliegue a producción.
+
+## CI/CD: Ejecución automática de tests unitarios y mockeados
+
+En el workflow de GitHub Actions, todos los tests unitarios y mockeados se ejecutan automáticamente en cada push o pull request a la rama `main`.
+
+- **No es necesario listar los archivos de test manualmente**: cualquier archivo nuevo que termine en `.test.js` o `.spec.js` será detectado y ejecutado automáticamente.
+- **Sin conexión a base de datos**: el workflow define la variable de entorno `MOCK_TESTS=1`, lo que hace que el setup de Vitest salte la inicialización de la base de datos y solo ejecute tests que no dependen de una DB real.
+- **¿Cómo agregar nuevos tests?** simplemente crear un nuevo archivo de test en cualquier carpeta del proyecto (por ejemplo, `src/helpers/miUtil.test.js`). No se necesita modificar el workflow.
+- **Comando usado en CI:**
+
+```sh
+MOCK_TESTS=1 npx vitest run
+```

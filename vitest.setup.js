@@ -47,49 +47,61 @@ async function executeSqlFile(filePath) {
   }
 }
 
-// Export this function as 'setup' for globalSetup
-export async function setup() {
-  let initialConnection;
-  try {
-    // Conectarse al servidor MySQL (sin especificar una base de datos) para crear la BD de prueba
-    initialConnection = await mysql.createConnection({
-      host: DB_HOST,
-      user: DB_USER,
-      password: DB_PASSWORD,
-    });
+// Saltar setup/teardown si solo se corren tests mockeados
+let setup, teardown;
+if (process.env.MOCK_TESTS === "1") {
+  console.log(
+    "MOCK_TESTS=1: Saltando setup de base de datos para tests mockeados."
+  );
+  setup = async function () {};
+  teardown = async function () {};
+} else {
+  // Export this function as 'setup' for globalSetup
+  setup = async function () {
+    let initialConnection;
+    try {
+      // Conectarse al servidor MySQL (sin especificar una base de datos) para crear la BD de prueba
+      initialConnection = await mysql.createConnection({
+        host: DB_HOST,
+        user: DB_USER,
+        password: DB_PASSWORD,
+      });
 
-    // Crear la base de datos de prueba si no existe, con el charset y collation correctos
-    await initialConnection.query(
-      `CREATE DATABASE IF NOT EXISTS \`${DB_TEST_NAME}\` CHARACTER SET ${DB_CHARSET} COLLATE ${DB_COLLATION};`
-    );
-    console.log(`Base de datos de prueba '${DB_TEST_NAME}' asegurada/creada.`);
-    await initialConnection.end();
-
-    // Ejecutar el script de esquema
-    // Este script DEBE incluir los DROP TABLES para limpiar antes de crear.
-    await executeSqlFile(schemaSqlPath);
-
-    // Ejecutar el script de seeds
-    await executeSqlFile(seedsSqlPath);
-  } catch (error) {
-    console.error(
-      "Falló la configuración de la base de datos de prueba:",
-      error
-    );
-    if (initialConnection) {
+      // Crear la base de datos de prueba si no existe, con el charset y collation correctos
+      await initialConnection.query(
+        `CREATE DATABASE IF NOT EXISTS \`${DB_TEST_NAME}\` CHARACTER SET ${DB_CHARSET} COLLATE ${DB_COLLATION};`
+      );
+      console.log(
+        `Base de datos de prueba '${DB_TEST_NAME}' asegurada/creada.`
+      );
       await initialConnection.end();
-    }
-    process.exit(1); // Detiene la ejecución de los tests si el setup falla
-  }
-}
 
-//   función `teardown` para limpiar después de todos los tests
-export async function teardown() {
-  if (pool) {
-    await pool.end();
-    console.log("Pool de conexiones de la base de datos de prueba cerrado.");
-  }
+      // Ejecutar el script de esquema
+      // Este script DEBE incluir los DROP TABLES para limpiar antes de crear.
+      await executeSqlFile(schemaSqlPath);
+
+      // Ejecutar el script de seeds
+      await executeSqlFile(seedsSqlPath);
+    } catch (error) {
+      console.error(
+        "Falló la configuración de la base de datos de prueba:",
+        error
+      );
+      if (initialConnection) {
+        await initialConnection.end();
+      }
+      process.exit(1); // Detiene la ejecución de los tests si el setup falla
+    }
+  };
+  //   función `teardown` para limpiar después de todos los tests
+  teardown = async function () {
+    if (pool) {
+      await pool.end();
+      console.log("Pool de conexiones de la base de datos de prueba cerrado.");
+    }
+  };
 }
+export { setup, teardown };
 
 // Vitest ejecutará este archivo. La llamada a setupTestDatabase() iniciará el proceso.
 // La promesa devuelta por setupTestDatabase() será esperada por Vitest.
