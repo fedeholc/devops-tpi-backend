@@ -3,6 +3,12 @@ import * as authService from "../services/authService.js";
 
 // Mock antes de importar la app y la ruta
 vi.mock("../services/authService.js");
+vi.mock("../services/clienteService.js", () => ({
+  getClienteByUserId: vi.fn().mockResolvedValue(undefined),
+}));
+vi.mock("../services/tecnicoService.js", () => ({
+  getTecnicoByUserId: vi.fn().mockResolvedValue(undefined),
+}));
 
 import express from "express";
 import request from "supertest";
