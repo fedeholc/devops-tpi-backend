@@ -11,25 +11,20 @@ env:
   IMAGE_NAME: pp4-backend
 
 jobs:
-  # TODO: Habilitar tests cuando estén configurados para CI
-  # test:
-  #   runs-on: ubuntu-latest
-  #
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: "22"
-  #         cache: "npm"
-  #
-  #     - name: Install dependencies
-  #       run: npm ci
-  #
-  #     - name: Run tests
-  #       run: npm test
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
 
   build-and-push:
     # needs: test  # Deshabilitado temporalmente
@@ -84,31 +79,31 @@ jobs:
           script: |
             cd ${{ secrets.EC2_PROJECT_PATH || '/home/ubuntu/devops-tpi-infra' }}
             echo "🚀 Iniciando deployment del backend..."
-            
+
             # Descargar la nueva imagen
             docker-compose pull backend
-            
+
             # Parar el backend actual para evitar conflictos
             docker-compose stop backend
-            
+
             # Remover el contenedor anterior
             docker-compose rm -f backend
-            
+
             # Recrear solo el servicio backend
             docker-compose up -d backend
-            
+
             # Esperar un momento para que inicie
             sleep 5
-            
+
             # Limpiar imágenes no utilizadas
             docker image prune -f
-            
+
             # Verificar que el servicio esté corriendo
             echo "🔍 Verificando estado del backend..."
             docker-compose ps backend
-            
+
             # Mostrar logs si hay problemas
             echo "📋 Últimos logs del backend:"
             docker-compose logs --tail=20 backend
-            
+
             echo "✅ Backend desplegado exitosamente!"
