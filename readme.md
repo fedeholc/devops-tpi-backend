@@ -1,30 +1,20 @@
-# PP4 - Backend
+# Seminario de Actualización dev ops - 3°B <!-- omit in toc -->
 
-## Cómo correr el backend
+## Trabajo Práctico Integrador <!-- omit in toc -->
 
-Instalar dependencias:
+### Equipo:
 
-```bash
-npm install
-```
+- **Federico Holc** (comisión B)
+- **Iris Zamora** (comisión A)
+- **Martín López** (comisión B)
+- **Agustina Kopistinski** (comisión A)
 
-Si se quiere modificar la configuración que viene por defecto, crear el archivo `.env`, ej:
+Ver documentación del proyecto en el siguiente enlace:
+[Documentación del proyecto](https://github.com/fedeholc/devops-tpi-infra/blob/main/README.MD)
 
-```bash
-PORT=5000
-ADDRESS=localhost
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=1234
-DB_NAME=pp4
-DB_TEST_NAME=pp4_test
-```
+---
 
-Para correr el backend:
-
-```bash
-npm start
-```
+# Información útil sobre el backend
 
 ## Habilitar / deshabilitar JSDoc
 
@@ -42,42 +32,6 @@ Para asegurar la calidad y el correcto funcionamiento del backend, hemos impleme
 ```bash
 npm run test
 ```
-
-Actualmente, el proyecto cuenta con dos tipos principales de pruebas que cubren diferentes aspectos del sistema:
-
-### 1. Pruebas de Servicios (Ej: `clienteService.test.js`)
-
-Estas pruebas se centran en la lógica de negocio encapsulada en los **servicios** y su interacción directa con la base de datos.
-
-- **Tipo de Test**: Se consideran pruebas de **integración a nivel de servicio**. Aunque cada función del servicio se prueba, la interacción con la base de datos (real o de prueba) significa que no están completamente aisladas como en una prueba unitaria pura.
-- **Qué se testea**:
-  - La correcta ejecución de las operaciones CRUD (Crear, Leer, Actualizar, Eliminar) definidas en cada servicio (por ejemplo, `createCliente`, `getClienteById`, `getAllClientes`, `updateCliente`, `deleteCliente`).
-  - La correcta persistencia y recuperación de datos de la base de datos.
-  - La validación de los datos devueltos por los servicios contra los esquemas definidos (ej: `ClienteSchema`), asegurando la integridad y estructura de la información.
-  - El manejo de casos específicos, como la búsqueda de entidades existentes o inexistentes.
-- **Propósito**:
-  - Garantizar que la lógica de negocio que manipula los datos funciona como se espera.
-  - Detectar tempranamente problemas en las consultas a la base de datos o en la lógica de transformación de datos dentro de los servicios.
-  - Proporcionar una red de seguridad al refactorizar la capa de servicios o al modificar el esquema de la base de datos.
-
-### 2. Pruebas de Rutas y Controladores (Ej: `clienteRoutes.test.js`)
-
-Estas pruebas evalúan el comportamiento de la API desde el punto de vista de un cliente, simulando peticiones HTTP a los diferentes endpoints.
-
-- **Tipo de Test**: Son pruebas de **integración de API** (a veces referidas como pruebas end-to-end del backend). Verifican el flujo completo de una solicitud desde que llega al servidor hasta que se emite una respuesta.
-- **Qué se testea**:
-  - El correcto funcionamiento de cada ruta y método HTTP (GET, POST, PUT, DELETE) definido en la API.
-  - La lógica de los controladores, incluyendo cómo procesan las solicitudes y construyen las respuestas.
-  - La correcta aplicación de middlewares, especialmente el de autenticación y autorización (por ejemplo, verificar que rutas protegidas requieran un token válido y que ciertos roles tengan los permisos adecuados).
-  - Los códigos de estado HTTP devueltos por cada endpoint según el escenario (200, 201, 400, 401, 403, 404, etc.).
-  - La estructura y el contenido del cuerpo de las respuestas, validándolos contra los esquemas definidos para asegurar que la API devuelve los datos esperados.
-- **Propósito**:
-  - Asegurar que los endpoints de la API son accesibles y se comportan según la especificación (definida en `openapi.yaml`).
-  - Verificar la correcta integración entre las rutas, los controladores, los servicios y los middlewares.
-  - Detectar regresiones o comportamientos inesperados en la API cuando se introducen cambios en el código.
-  - Servir como una forma de documentación ejecutable, mostrando cómo interactuar con la API.
-
-Estas pruebas son fundamentales para mantener la estabilidad del backend, facilitar la detección de errores y permitir realizar cambios y nuevas implementaciones con mayor confianza.
 
 ## Sobre la documentación de la API
 
@@ -138,24 +92,6 @@ host = localhost:5000
 Allí se debe colocar el host, en coincidencia con el que se haya configurado en el backend, y los tokens de los usuarios que se quieran probar.
 
 Para obtener los tokens se puede user el endpoint de login con uno de los usuarios que ya están creados en la base de datos, y copiar el token que devuelve.
-
-## Pruebas End-to-End (E2E) del Frontend con Playwright (Planificadas)
-
-Si bien las pruebas descritas anteriormente se centran en el backend, también tenemos previsto implementar pruebas end-to-end (E2E) para la aplicación frontend. La herramienta elegida para estas pruebas será **Playwright**, aprovechando su capacidad para automatizar navegadores modernos y simular interacciones de usuario complejas a través de la interfaz gráfica, tal como lo haría un usuario final.
-
-**Estado Actual:**
-
-Actualmente, estas pruebas E2E para el frontend **aún no se han implementado**. La razón principal es que la interfaz de usuario (UI) del frontend se encuentra en una fase de desarrollo activo y está sujeta a cambios frecuentes. Realizar pruebas E2E detalladas sobre una UI que evoluciona constantemente resultaría ineficiente, ya que los selectores de elementos y los flujos de usuario podrían romperse con cada modificación visual o estructural.
-
-**Plan Futuro:**
-
-Una vez que la interfaz del frontend alcance un estado más estable y las funcionalidades principales estén consolidadas, procederemos a diseñar y ejecutar los scripts de prueba E2E con **Playwright**. Estas pruebas serán fundamentales para:
-
-- Verificar la correcta integración entre el frontend y el backend desde la perspectiva del usuario.
-- Asegurar que los flujos de usuario críticos (como el registro, login, creación de pedidos, etc.) funcionen correctamente de principio a fin.
-- Detectar regresiones en la UI o en la interacción con la API que podrían pasar desapercibidas en pruebas más aisladas.
-
-El objetivo es garantizar una experiencia de usuario fluida y sin errores antes de cualquier despliegue a producción.
 
 ## CI/CD: Ejecución automática de tests unitarios y mockeados
 
