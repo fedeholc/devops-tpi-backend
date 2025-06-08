@@ -27,7 +27,7 @@ jobs:
         run: MOCK_TESTS=1 npx vitest run
 
   build-and-push:
-    # needs: test  # Deshabilitado temporalmente
+    needs: test  # Deshabilitado temporalmente
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 

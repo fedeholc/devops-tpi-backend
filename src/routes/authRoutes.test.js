@@ -1,10 +1,12 @@
-import request from "supertest";
-import express from "express";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import authRoutes from "./authRoutes.js";
 import * as authService from "../services/authService.js";
 
+// Mock antes de importar la app y la ruta
 vi.mock("../services/authService.js");
+
+import express from "express";
+import request from "supertest";
+import authRoutes from "./authRoutes.js";
 
 const app = express();
 app.use(express.json());

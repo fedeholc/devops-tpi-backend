@@ -1,8 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import * as authController from "./authController.js";
 import * as authService from "../services/authService.js";
 
+// Mock antes de importar el controller
 vi.mock("../services/authService.js");
+
+import * as authController from "./authController.js";
 
 function getMockRes() {
   const res = {};
