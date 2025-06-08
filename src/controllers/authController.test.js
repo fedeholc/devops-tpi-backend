@@ -3,6 +3,12 @@ import * as authService from "../services/authService.js";
 
 // Mock antes de importar el controller
 vi.mock("../services/authService.js");
+vi.mock("../services/clienteService.js", () => ({
+  getClienteByUserId: vi.fn().mockResolvedValue(undefined),
+}));
+vi.mock("../services/tecnicoService.js", () => ({
+  getTecnicoByUserId: vi.fn().mockResolvedValue(undefined),
+}));
 
 import * as authController from "./authController.js";
 
