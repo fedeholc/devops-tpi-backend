@@ -1,4 +1,4 @@
-# Seminario de Actualización dev ops - 3°B <!-- omit in toc -->
+# Seminario de Actualización dev ops <!-- omit in toc -->
 
 ## Trabajo Práctico Integrador <!-- omit in toc -->
 
@@ -91,7 +91,7 @@ host = localhost:5000
 
 Allí se debe colocar el host, en coincidencia con el que se haya configurado en el backend, y los tokens de los usuarios que se quieran probar.
 
-Para obtener los tokens se puede user el endpoint de login con uno de los usuarios que ya están creados en la base de datos, y copiar el token que devuelve.
+Para obtener los tokens se puede usar el endpoint de login con uno de los usuarios que ya están creados en la base de datos, y copiar el token que devuelve.
 
 ## CI/CD: Ejecución automática de tests unitarios y mockeados
 
