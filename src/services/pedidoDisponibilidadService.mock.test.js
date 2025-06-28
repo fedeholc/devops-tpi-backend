@@ -73,7 +73,7 @@ describe("createPedidoDisponibilidad y deletePedidoDisponibilidad (mock)", () =>
       id: undefined,
       pedidoId: 3,
       clienteId: 3,
-      dia: "miércoles",
+      dia: "miercoles",
       horaInicio: "10:00",
       horaFin: "13:00",
     };
