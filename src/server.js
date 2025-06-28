@@ -31,6 +31,13 @@ const CONFIG = {
 // instancia de la aplicación Express
 export const app = express();
 
+// Set charset for responses
+app.use((req, res, next) => {
+  res.charset = "utf-8";
+  res.set("Content-Type", "application/json; charset=utf-8");
+  next();
+});
+
 // middlewares
 // para egistrar las solicitudes HTTP en la consola
 app.use(logger("dev"));
